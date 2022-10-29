@@ -59,6 +59,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
     divMediaDeviceInfo = document.createElement("div");
     divMediaStreamInfo = document.createElement("div");
     const devices = await window.navigator.mediaDevices.enumerateDevices();
+    console.log(devices);
     for (const mediaDeviceInfo of devices) {
       displayMediaDeviceInfo(mediaDeviceInfo);
     }
@@ -221,6 +222,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
   function recorderMediaStream(mediaStream) {
     try {
       return (function (evt) {
+        console.log(mediaStream);
         const recorder = new MediaRecorder(mediaStream);
         const timeslice = prompt("Number of milliseconds");
         if (timeslice === null) {
