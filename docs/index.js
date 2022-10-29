@@ -73,8 +73,6 @@ async function start( [ evtWindow, ErrorLog ] ) {
 
   function displayMediaDeviceInfo(mediaDeviceInfo) {
     try {
-      divMediaDeviceInfo.innerHTML = "";
-      divMediaStreamInfo.innerHTML = "";
       const div = document.createElement("div");
       div.style.border = "1px solid black";
       let p;
@@ -105,8 +103,6 @@ async function start( [ evtWindow, ErrorLog ] ) {
 
   function displayMediaStream(mediaStream) {
     try {
-      divMediaDeviceInfo.innerHTML = "";
-      divMediaStreamInfo.innerHTML = "";
       const div = document.createElement("div");
       div.style.border = "1px solid black";
       let p;
@@ -169,6 +165,8 @@ async function start( [ evtWindow, ErrorLog ] ) {
                   }
                 }
               });
+              divMediaDeviceInfo.innerHTML = "";
+              divMediaStreamInfo.innerHTML = "";
               displayMediaStream(mediaStream);
             } catch (e) {
               console.error(e);
@@ -187,6 +185,8 @@ async function start( [ evtWindow, ErrorLog ] ) {
                   }
                 }
               });
+              divMediaDeviceInfo.innerHTML = "";
+              divMediaStreamInfo.innerHTML = "";
               displayMediaStream(mediaStream);
             } catch (e) {
               console.error(e);
