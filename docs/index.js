@@ -182,7 +182,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
               const mediaStream = await window.navigator.mediaDevices.getUserMedia({
                 audio: {
                   deviceId: {
-                    exact: device.deviceId,
+                    exact: deviceInfo.deviceId,
                   }
                 }
               });
@@ -200,7 +200,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
               const stream = await window.navigator.mediaDevices.getUserMedia({
                 audio: {
                   deviceId: {
-                    exact: device.deviceId,
+                    exact: deviceInfo.deviceId,
                   }
                 }
               });
