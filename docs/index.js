@@ -72,74 +72,88 @@ async function start( [ evtWindow, ErrorLog ] ) {
 }
 
 function displayMediaDeviceInfo(mediaDeviceInfo) {
-  divMediaDeviceInfo.innerHTML = "";
-  divMediaStreamInfo.innerHTML = "";
-  const div = document.createElement("div");
-  div.style.border = "1px solid black";
-  let p;
-  p = document.createElement("p");
-  p.appendChild(document.createTextNode("deviceId:" + mediaDeviceInfo.deviceId));
-  div.appendChild(p);
-  p = document.createElement("p");
-  p.appendChild(document.createTextNode("groupId: " + mediaDeviceInfo.groupId));
-  div.appendChild(p);
-  p = document.createElement("p");
-  p.appendChild(document.createTextNode("kind: " + mediaDeviceInfo.kind));
-  div.appendChild(p);
-  p = document.createElement("p");
-  p.appendChild(document.createTextNode("label: " + mediaDeviceInfo.label));
-  div.appendChild(p);
-  const btn = document.createElement("button");
-  btn.innerHTML = "Get Stream";
-  btn.addEventListener("click", getterMediaStream(deviceInfo));
-  div.appendChild(btn);
-  divMediaDeviceInfo.appendChild(div);
+  try {
+    divMediaDeviceInfo.innerHTML = "";
+    divMediaStreamInfo.innerHTML = "";
+    const div = document.createElement("div");
+    div.style.border = "1px solid black";
+    let p;
+    p = document.createElement("p");
+    p.appendChild(document.createTextNode("deviceId:" + mediaDeviceInfo.deviceId));
+    div.appendChild(p);
+    p = document.createElement("p");
+    p.appendChild(document.createTextNode("groupId: " + mediaDeviceInfo.groupId));
+    div.appendChild(p);
+    p = document.createElement("p");
+    p.appendChild(document.createTextNode("kind: " + mediaDeviceInfo.kind));
+    div.appendChild(p);
+    p = document.createElement("p");
+    p.appendChild(document.createTextNode("label: " + mediaDeviceInfo.label));
+    div.appendChild(p);
+    const btn = document.createElement("button");
+    btn.innerHTML = "Get Stream";
+    btn.addEventListener("click", getterMediaStream(deviceInfo));
+    div.appendChild(btn);
+    divMediaDeviceInfo.appendChild(div);
+  } catch (e) {
+    ErrorLog.rethrow({
+      functionName: "displayMediaDeviceInfo",
+      error: e,
+    });
+  }
 }
 
 function displayMediaStream(mediaStream) {
-  divMediaDeviceInfo.innerHTML = "";
-  divMediaStreamInfo.innerHTML = "";
-  const div = document.createElement("div");
-  div.style.border = "1px solid black";
-  let p;
-  p = document.createElement("p");
-  p.appendChild(document.createTextNode("id: " + mediaStream.id));
-  div.appendChild(p);
-  p = document.createElement("p");
-  p.appendChild(document.createTextNode("active: " + mediaStream.active));
-  div.appendChild(p);
-  const tracks = mediaStream.getTracks();
-  for (const track of tracks) {
-    const divTrack = document.createElement("div");
-    divTrack.style.border = "1px solid black";
+  try {
+    divMediaDeviceInfo.innerHTML = "";
+    divMediaStreamInfo.innerHTML = "";
+    const div = document.createElement("div");
+    div.style.border = "1px solid black";
+    let p;
     p = document.createElement("p");
-    p.appendChild(document.createTextNode("label: " + track.label));
-    divTrack.appendChild(p);
+    p.appendChild(document.createTextNode("id: " + mediaStream.id));
+    div.appendChild(p);
     p = document.createElement("p");
-    p.appendChild(document.createTextNode("id: " + track.id));
-    divTrack.appendChild(p);
-    p = document.createElement("p");
-    p.appendChild(document.createTextNode("kind: " + track.kind));
-    divTrack.appendChild(p);
-    p = document.createElement("p");
-    p.appendChild(document.createTextNode("contentHint: " + track.contentHint));
-    divTrack.appendChild(p);
-    p = document.createElement("p");
-    p.appendChild(document.createTextNode("enabled: " + track.enabled));
-    divTrack.appendChild(p);
-    p = document.createElement("p");
-    p.appendChild(document.createTextNode("muted: " + track.muted));
-    divTrack.appendChild(p);
-    p = document.createElement("p");
-    p.appendChild(document.createTextNode("readyState: " + track.readyState));
-    divTrack.appendChild(p);
-    div.appendChild(divTrack);
+    p.appendChild(document.createTextNode("active: " + mediaStream.active));
+    div.appendChild(p);
+    const tracks = mediaStream.getTracks();
+    for (const track of tracks) {
+      const divTrack = document.createElement("div");
+      divTrack.style.border = "1px solid black";
+      p = document.createElement("p");
+      p.appendChild(document.createTextNode("label: " + track.label));
+      divTrack.appendChild(p);
+      p = document.createElement("p");
+      p.appendChild(document.createTextNode("id: " + track.id));
+      divTrack.appendChild(p);
+      p = document.createElement("p");
+      p.appendChild(document.createTextNode("kind: " + track.kind));
+      divTrack.appendChild(p);
+      p = document.createElement("p");
+      p.appendChild(document.createTextNode("contentHint: " + track.contentHint));
+      divTrack.appendChild(p);
+      p = document.createElement("p");
+      p.appendChild(document.createTextNode("enabled: " + track.enabled));
+      divTrack.appendChild(p);
+      p = document.createElement("p");
+      p.appendChild(document.createTextNode("muted: " + track.muted));
+      divTrack.appendChild(p);
+      p = document.createElement("p");
+      p.appendChild(document.createTextNode("readyState: " + track.readyState));
+      divTrack.appendChild(p);
+      div.appendChild(divTrack);
+    }
+    const btn = document.createElement("button");
+    btn.innerHTML = "Record Stream";
+    btn.addEventListener("click", recorderMediaStream(mediaStream));
+    div.appendChild(btn);
+    divMediaStreamInfo.appendChild(div);
+  } catch (e) {
+    ErrorLog.rethrow({
+      functionName: "displayMediaStream",
+      error: e,
+    });
   }
-  const btn = document.createElement("button");
-  btn.innerHTML = "Record Stream";
-  btn.addEventListener("click", recorderMediaStream(mediaStream));
-  div.appendChild(btn);
-  divMediaStreamInfo.appendChild(div);
 }
 
 function getterMediaStream(deviceInfo) {
@@ -206,22 +220,29 @@ function getterMediaStream(deviceInfo) {
 }
 
 function recorderMediaStream(mediaStream) {
-  return (function (evt) {
-    const recorder = new MediaRecorder(mediaStream);
-    const timeslice = prompt("Number of milliseconds");
-    if (timeslice === null) {
-      return;
-    }
-    recorder.start(Number.parseInt(timeslice));
-    recorder.addEventListener("dataavailable", dataReader);
-    function dataReader(evt) {
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = URL.createObjectURL(evt.data);
-      a.download = "RecorderOutput";
-      a.click();
-      a.remove();
-      recorder.removeEventListener("dataavailable", dataReader);
-    }
-  });
+  try {
+    return (function (evt) {
+      const recorder = new MediaRecorder(mediaStream);
+      const timeslice = prompt("Number of milliseconds");
+      if (timeslice === null) {
+        return;
+      }
+      recorder.start(Number.parseInt(timeslice));
+      recorder.addEventListener("dataavailable", dataReader);
+      function dataReader(evt) {
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = URL.createObjectURL(evt.data);
+        a.download = "RecorderOutput";
+        a.click();
+        a.remove();
+        recorder.removeEventListener("dataavailable", dataReader);
+      }
+    });
+  } catch (e) {
+    ErrorLog.rethrow({
+      functionName: "recorderMediaStream",
+      error: e,
+    });
+  }
 }
