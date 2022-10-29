@@ -91,7 +91,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
       div.appendChild(p);
       const btn = document.createElement("button");
       btn.innerHTML = "Get Stream";
-      btn.addEventListener("click", getterMediaStream(deviceInfo));
+      btn.addEventListener("click", getterMediaStream(mediaDeviceInfo));
       div.appendChild(btn);
       divMediaDeviceInfo.appendChild(div);
     } catch (e) {
