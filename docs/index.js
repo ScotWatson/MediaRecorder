@@ -57,6 +57,7 @@ let divMediaStreamInfo;
 async function start( [ evtWindow, ErrorLog ] ) {
   try {
     divMediaDeviceInfo = document.createElement("div");
+    divMediaStreamInfo = document.createElement("div");
     const devices = await window.navigator.mediaDevices.enumerateDevices();
     for (const mediaDeviceInfo of devices) {
       displayMediaDeviceInfo(mediaDeviceInfo);
