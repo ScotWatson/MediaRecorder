@@ -64,6 +64,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
       displayMediaDeviceInfo(mediaDeviceInfo);
     }
     document.body.appendChild(divMediaDeviceInfo);
+    document.body.appendChild(divMediaStreamInfo);
   } catch (e) {
     ErrorLog.rethrow({
       functionName: "start",
