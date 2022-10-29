@@ -165,6 +165,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
                   }
                 }
               });
+              console.log(mediaStream);
               divMediaDeviceInfo.innerHTML = "";
               divMediaStreamInfo.innerHTML = "";
               displayMediaStream(mediaStream);
@@ -185,6 +186,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
                   }
                 }
               });
+              console.log(mediaStream);
               divMediaDeviceInfo.innerHTML = "";
               divMediaStreamInfo.innerHTML = "";
               displayMediaStream(mediaStream);
@@ -205,6 +207,7 @@ async function start( [ evtWindow, ErrorLog ] ) {
                   }
                 }
               });
+              console.log(mediaStream);
             } catch (e) {
               console.error(e);
             }
